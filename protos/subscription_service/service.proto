@@ -1,0 +1,10 @@
+syntax="proto3";
+
+package subscription_service;
+option go_package ="genproto/subscription_service";
+
+import "resource_category.proto";
+
+service ResourceCategoryService {
+    rpc Create(ResourceCategory) returns (ResourceCategory) {};
+}

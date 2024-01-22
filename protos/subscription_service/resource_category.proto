@@ -1,0 +1,9 @@
+syntax="proto3";
+
+package subscription_service;
+option go_package ="genproto/subscription_service";
+
+
+message ResourceCategory {
+    string field = 1;
+}
