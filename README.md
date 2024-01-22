@@ -1,0 +1,1 @@
+# go_subscription_service_template
