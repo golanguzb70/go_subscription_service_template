@@ -1,9 +1,10 @@
 package storage
 
 import (
+	"github.com/golanguzb70/go_subscription_service/pkg/db"
+	"github.com/golanguzb70/go_subscription_service/pkg/logger"
 	"github.com/golanguzb70/go_subscription_service/storage/postgres"
 	"github.com/golanguzb70/go_subscription_service/storage/repo"
-	"github.com/jmoiron/sqlx"
 )
 
 type StorageI interface {
@@ -14,9 +15,9 @@ type storagePg struct {
 	resourceCategory repo.ResourceCategoryI
 }
 
-func New(db *sqlx.DB) StorageI {
+func New(db *db.Postgres, log logger.Logger) StorageI {
 	return &storagePg{
-		resourceCategory: postgres.NewCategoryRepo(db),
+		resourceCategory: postgres.NewCategoryRepo(db, log),
 	}
 }
 

@@ -1,10 +1,12 @@
 package services
 
 import (
+	"context"
+
+	pb "github.com/golanguzb70/go_subscription_service/genproto/subscription_service"
 	l "github.com/golanguzb70/go_subscription_service/pkg/logger"
 	grpclient "github.com/golanguzb70/go_subscription_service/server/grpc/client"
 	"github.com/golanguzb70/go_subscription_service/storage"
-	pb "github.com/golanguzb70/go_subscription_service/genproto/subscription_service"
 )
 
 type ResourceCategoryService struct {
@@ -21,4 +23,24 @@ func NewResourceCategoryService(stroge storage.StorageI, log l.Logger, services 
 		logger:   log,
 		services: services,
 	}
+}
+
+func (s *ResourceCategoryService) Create(ctx context.Context, req *pb.ResourceCategory) (*pb.ResourceCategory, error) {
+	return s.storage.ResourceCategory().Create(ctx, req)
+}
+
+func (s *ResourceCategoryService) Get(ctx context.Context, req *pb.Id) (*pb.ResourceCategory, error) {
+	return s.storage.ResourceCategory().Get(ctx, req)
+}
+
+func (s *ResourceCategoryService) Find(ctx context.Context, req *pb.GetListFilter) (*pb.ResourceCategories, error) {
+	return s.storage.ResourceCategory().Find(ctx, req)
+}
+
+func (s *ResourceCategoryService) Update(ctx context.Context, req *pb.ResourceCategory) (*pb.ResourceCategory, error) {
+	return s.storage.ResourceCategory().Update(ctx, req)
+}
+
+func (s *ResourceCategoryService) Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error) {
+	return s.storage.ResourceCategory().Delete(ctx, req)
 }

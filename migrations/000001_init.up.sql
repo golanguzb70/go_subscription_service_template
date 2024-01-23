@@ -5,15 +5,26 @@ CREATE TYPE duration AS ENUM (
 CREATE TABLE IF NOT EXISTS resource_categories (
   id uuid PRIMARY KEY,
   title varchar NOT NULL,
-  category_key varchar NOT NULL,
-  allow_all_resources boolean NOT NULL DEFAULT true
+  category_key varchar NOT NULL UNIQUE,
+  allow_all_resources boolean NOT NULL DEFAULT true,
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  deleted_at TIMESTAMP WITHOUT TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS resources (
   id uuid PRIMARY KEY,
   title varchar NOT NULL,
-  resource_key varchar NOT NULL,
-  category_id uuid NOT NULL REFERENCES resource_categories(id)
+  resource_key varchar NOT NULL UNIQUE,
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  deleted_at TIMESTAMP WITHOUT TIME ZONE
+);
+
+CREATE TABLE IF NOT EXISTS resources_categories_m2m (
+  id uuid PRIMARY KEY,
+  category_id uuid NOT NULL REFERENCES resource_categories(id),
+  resource_id uuid NOT NULL REFERENCES resources(id)
 );
 
 CREATE TABLE IF NOT EXISTS subscription_categories (
@@ -28,13 +39,19 @@ CREATE TABLE IF NOT EXISTS subscription_categories (
   image_ru varchar NOT NULL,
   image_en varchar NOT NULL,
   active boolean NOT NULL DEFAULT false,
-  visible boolean NOT NULL DEFAULT true
+  visible boolean NOT NULL DEFAULT true,
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  deleted_at TIMESTAMP WITHOUT TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS resource_subsription_categories (
   id uuid PRIMARY KEY,
   resource_category_id uuid NOT NULL REFERENCES resource_categories(id),
-  subscription_category_id uuid NOT NULL REFERENCES subscription_categories(id)
+  subscription_category_id uuid NOT NULL REFERENCES subscription_categories(id),
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  deleted_at TIMESTAMP WITHOUT TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS subscriptions (
@@ -46,7 +63,10 @@ CREATE TABLE IF NOT EXISTS subscriptions (
   price int NOT NULL DEFAULT 0,
   duration_type duration NOT NULL DEFAULT 'day',
   duration int NOT NULL,
-  category_id uuid NOT NULL REFERENCES subscription_categories(id)
+  category_id uuid NOT NULL REFERENCES subscription_categories(id),
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  deleted_at TIMESTAMP WITHOUT TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS user_subscriptions (
@@ -55,5 +75,8 @@ CREATE TABLE IF NOT EXISTS user_subscriptions (
   subscription_id uuid NOT NULL REFERENCES subscriptions(id),
   start_time timestamp NOT NULL DEFAULT 'now()',
   end_time timestamp NOT NULL,
-  active boolean NOT NULL DEFAULT false
+  active boolean NOT NULL DEFAULT false,
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  deleted_at TIMESTAMP WITHOUT TIME ZONE
 );

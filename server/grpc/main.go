@@ -7,12 +7,12 @@ import (
 
 	"github.com/golanguzb70/go_subscription_service/config"
 	pb "github.com/golanguzb70/go_subscription_service/genproto/subscription_service"
+	"github.com/golanguzb70/go_subscription_service/pkg/db"
 	l "github.com/golanguzb70/go_subscription_service/pkg/logger"
 	grpclient "github.com/golanguzb70/go_subscription_service/server/grpc/client"
 	"github.com/golanguzb70/go_subscription_service/server/grpc/services"
 	"github.com/golanguzb70/go_subscription_service/storage"
 
-	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 
 	"google.golang.org/grpc"
@@ -22,16 +22,8 @@ type GRPCService struct {
 	ResourceCategoryService *services.ResourceCategoryService
 }
 
-func New(cfg *config.Config, logger l.Logger) (*GRPCService, error) {
-	psqlString := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		cfg.PostgresHost,
-		cfg.PostgresPort,
-		cfg.PostgresUser,
-		cfg.PostgresPassword,
-		cfg.PostgresDatabase,
-	)
-
-	connDb, err := sqlx.Connect("postgres", psqlString)
+func New(cfg *config.Config, log l.Logger) (*GRPCService, error) {
+	psql, err := db.New(*cfg)
 	if err != nil {
 		return nil, fmt.Errorf("Error while connecting to database: %v", err)
 	}
@@ -42,7 +34,7 @@ func New(cfg *config.Config, logger l.Logger) (*GRPCService, error) {
 	}
 
 	return &GRPCService{
-		ResourceCategoryService: services.NewResourceCategoryService(storage.New(connDb), logger, grpcClient),
+		ResourceCategoryService: services.NewResourceCategoryService(storage.New(psql, log), log, grpcClient),
 	}, nil
 }
 
