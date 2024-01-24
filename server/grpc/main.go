@@ -20,6 +20,7 @@ import (
 
 type GRPCService struct {
 	ResourceCategoryService *services.ResourceCategoryService
+	ResourceService         *services.ResourceService
 }
 
 func New(cfg *config.Config, log l.Logger) (*GRPCService, error) {
@@ -28,13 +29,16 @@ func New(cfg *config.Config, log l.Logger) (*GRPCService, error) {
 		return nil, fmt.Errorf("Error while connecting to database: %v", err)
 	}
 
+	storageObj := storage.New(psql, log)
+
 	grpcClient, err := grpclient.NewGrpcClients(cfg)
 	if err != nil {
 		return nil, fmt.Errorf("Error while connecting with grpc clients: %v", err)
 	}
 
 	return &GRPCService{
-		ResourceCategoryService: services.NewResourceCategoryService(storage.New(psql, log), log, grpcClient),
+		ResourceCategoryService: services.NewResourceCategoryService(storageObj, log, grpcClient),
+		ResourceService:         services.NewResourceService(storageObj, log, grpcClient),
 	}, nil
 }
 
@@ -42,6 +46,7 @@ func (service *GRPCService) Run(logger l.Logger, cfg *config.Config) {
 	server := grpc.NewServer()
 
 	pb.RegisterResourceCategoryServiceServer(server, service.ResourceCategoryService)
+	pb.RegisterResourceServiceServer(server, service.ResourceService)
 
 	listener, err := net.Listen("tcp", cfg.RPCPort)
 	if err != nil {

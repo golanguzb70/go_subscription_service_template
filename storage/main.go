@@ -9,18 +9,25 @@ import (
 
 type StorageI interface {
 	ResourceCategory() repo.ResourceCategoryI
+	Resource() repo.ResourceI
 }
 
 type storagePg struct {
 	resourceCategory repo.ResourceCategoryI
+	resource         repo.ResourceI
 }
 
 func New(db *db.Postgres, log logger.Logger) StorageI {
 	return &storagePg{
 		resourceCategory: postgres.NewCategoryRepo(db, log),
+		resource:         postgres.NewResourceRepo(db, log),
 	}
 }
 
 func (s *storagePg) ResourceCategory() repo.ResourceCategoryI {
 	return s.resourceCategory
+}
+
+func (s *storagePg) Resource() repo.ResourceI {
+	return s.resource
 }

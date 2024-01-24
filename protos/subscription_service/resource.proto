@@ -1,0 +1,17 @@
+syntax="proto3";
+
+package subscription_service;
+option go_package ="genproto/subscription_service";
+
+message Resource {
+    string id = 1;
+    string title = 2;
+    string  key = 3;
+    string created_at = 4;
+    string updated_at = 5;
+}
+
+message Resources {
+    int32 count = 1;
+    repeated Resource items = 2;
+}

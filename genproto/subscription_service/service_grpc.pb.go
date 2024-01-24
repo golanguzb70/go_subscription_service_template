@@ -256,3 +256,241 @@ var ResourceCategoryService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "service.proto",
 }
+
+const (
+	ResourceService_Create_FullMethodName = "/subscription_service.ResourceService/Create"
+	ResourceService_Get_FullMethodName    = "/subscription_service.ResourceService/Get"
+	ResourceService_Find_FullMethodName   = "/subscription_service.ResourceService/Find"
+	ResourceService_Update_FullMethodName = "/subscription_service.ResourceService/Update"
+	ResourceService_Delete_FullMethodName = "/subscription_service.ResourceService/Delete"
+)
+
+// ResourceServiceClient is the client API for ResourceService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type ResourceServiceClient interface {
+	Create(ctx context.Context, in *Resource, opts ...grpc.CallOption) (*Resource, error)
+	Get(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Resource, error)
+	Find(ctx context.Context, in *GetListFilter, opts ...grpc.CallOption) (*Resources, error)
+	Update(ctx context.Context, in *Resource, opts ...grpc.CallOption) (*Resource, error)
+	Delete(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Empty, error)
+}
+
+type resourceServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewResourceServiceClient(cc grpc.ClientConnInterface) ResourceServiceClient {
+	return &resourceServiceClient{cc}
+}
+
+func (c *resourceServiceClient) Create(ctx context.Context, in *Resource, opts ...grpc.CallOption) (*Resource, error) {
+	out := new(Resource)
+	err := c.cc.Invoke(ctx, ResourceService_Create_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *resourceServiceClient) Get(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Resource, error) {
+	out := new(Resource)
+	err := c.cc.Invoke(ctx, ResourceService_Get_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *resourceServiceClient) Find(ctx context.Context, in *GetListFilter, opts ...grpc.CallOption) (*Resources, error) {
+	out := new(Resources)
+	err := c.cc.Invoke(ctx, ResourceService_Find_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *resourceServiceClient) Update(ctx context.Context, in *Resource, opts ...grpc.CallOption) (*Resource, error) {
+	out := new(Resource)
+	err := c.cc.Invoke(ctx, ResourceService_Update_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *resourceServiceClient) Delete(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, ResourceService_Delete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ResourceServiceServer is the server API for ResourceService service.
+// All implementations must embed UnimplementedResourceServiceServer
+// for forward compatibility
+type ResourceServiceServer interface {
+	Create(context.Context, *Resource) (*Resource, error)
+	Get(context.Context, *Id) (*Resource, error)
+	Find(context.Context, *GetListFilter) (*Resources, error)
+	Update(context.Context, *Resource) (*Resource, error)
+	Delete(context.Context, *Id) (*Empty, error)
+	mustEmbedUnimplementedResourceServiceServer()
+}
+
+// UnimplementedResourceServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedResourceServiceServer struct {
+}
+
+func (UnimplementedResourceServiceServer) Create(context.Context, *Resource) (*Resource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedResourceServiceServer) Get(context.Context, *Id) (*Resource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedResourceServiceServer) Find(context.Context, *GetListFilter) (*Resources, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Find not implemented")
+}
+func (UnimplementedResourceServiceServer) Update(context.Context, *Resource) (*Resource, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (UnimplementedResourceServiceServer) Delete(context.Context, *Id) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedResourceServiceServer) mustEmbedUnimplementedResourceServiceServer() {}
+
+// UnsafeResourceServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ResourceServiceServer will
+// result in compilation errors.
+type UnsafeResourceServiceServer interface {
+	mustEmbedUnimplementedResourceServiceServer()
+}
+
+func RegisterResourceServiceServer(s grpc.ServiceRegistrar, srv ResourceServiceServer) {
+	s.RegisterService(&ResourceService_ServiceDesc, srv)
+}
+
+func _ResourceService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Resource)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResourceServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ResourceService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResourceServiceServer).Create(ctx, req.(*Resource))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ResourceService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Id)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResourceServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ResourceService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResourceServiceServer).Get(ctx, req.(*Id))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ResourceService_Find_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetListFilter)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResourceServiceServer).Find(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ResourceService_Find_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResourceServiceServer).Find(ctx, req.(*GetListFilter))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ResourceService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Resource)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResourceServiceServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ResourceService_Update_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResourceServiceServer).Update(ctx, req.(*Resource))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ResourceService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Id)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResourceServiceServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ResourceService_Delete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResourceServiceServer).Delete(ctx, req.(*Id))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// ResourceService_ServiceDesc is the grpc.ServiceDesc for ResourceService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var ResourceService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "subscription_service.ResourceService",
+	HandlerType: (*ResourceServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Create",
+			Handler:    _ResourceService_Create_Handler,
+		},
+		{
+			MethodName: "Get",
+			Handler:    _ResourceService_Get_Handler,
+		},
+		{
+			MethodName: "Find",
+			Handler:    _ResourceService_Find_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _ResourceService_Update_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _ResourceService_Delete_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "service.proto",
+}

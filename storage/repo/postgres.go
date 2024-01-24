@@ -13,3 +13,12 @@ type ResourceCategoryI interface {
 	Update(ctx context.Context, req *pb.ResourceCategory) (*pb.ResourceCategory, error)
 	Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error)
 }
+
+type ResourceI interface {
+	Create(ctx context.Context, req *pb.Resource) (*pb.Resource, error)
+	Get(ctx context.Context, req *pb.Id) (*pb.Resource, error)
+	Find(ctx context.Context, req *pb.GetListFilter) (*pb.Resources, error)
+	Update(ctx context.Context, req *pb.Resource) (*pb.Resource, error)
+	Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error)
+}
+
