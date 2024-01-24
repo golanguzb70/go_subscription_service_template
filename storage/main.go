@@ -9,18 +9,21 @@ import (
 
 type StorageI interface {
 	ResourceCategory() repo.ResourceCategoryI
+	SubscriptionCategory() repo.SubscriptionCategoryI
 	Resource() repo.ResourceI
 }
 
 type storagePg struct {
-	resourceCategory repo.ResourceCategoryI
-	resource         repo.ResourceI
+	resourceCategory     repo.ResourceCategoryI
+	subscriptionCategory repo.SubscriptionCategoryI
+	resource             repo.ResourceI
 }
 
 func New(db *db.Postgres, log logger.Logger) StorageI {
 	return &storagePg{
-		resourceCategory: postgres.NewCategoryRepo(db, log),
-		resource:         postgres.NewResourceRepo(db, log),
+		resourceCategory:     postgres.NewCategoryRepo(db, log),
+		subscriptionCategory: postgres.NewSubscriptionCategoryRepo(db, log),
+		resource:             postgres.NewResourceRepo(db, log),
 	}
 }
 
@@ -30,4 +33,8 @@ func (s *storagePg) ResourceCategory() repo.ResourceCategoryI {
 
 func (s *storagePg) Resource() repo.ResourceI {
 	return s.resource
+}
+
+func (s *storagePg) SubscriptionCategory() repo.SubscriptionCategoryI {
+	return s.subscriptionCategory
 }

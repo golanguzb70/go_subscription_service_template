@@ -4,6 +4,7 @@ package subscription_service;
 option go_package ="genproto/subscription_service";
 
 import "resource_category.proto";
+import "subscription_categories.proto";
 import "resource.proto";
 import "common.proto";
 
@@ -13,7 +14,6 @@ service ResourceCategoryService {
     rpc Find(GetListFilter) returns (ResourceCategories) {};
     rpc Update(ResourceCategory) returns (ResourceCategory) {};
     rpc Delete(Id) returns (Empty) {};
-
     rpc AddResource(ResourceAndCategoryIds) returns (Empty) {};
     rpc RemoveResource(ResourceAndCategoryIds) returns (Empty) {};
 }
@@ -25,3 +25,12 @@ service ResourceService {
     rpc Update(Resource) returns (Resource) {};
     rpc Delete(Id) returns (Empty) {};
 }
+
+service SubscriptionCategoryService {
+    rpc Create(SubscriptionCategory) returns (SubscriptionCategory) {};
+    rpc Get(Id) returns (SubscriptionCategory) {};
+    rpc Find(GetListFilter) returns (SubscriptionCategories) {};
+    rpc Update(SubscriptionCategory) returns (SubscriptionCategory) {};
+    rpc Delete(Id) returns (Empty) {};
+}
+

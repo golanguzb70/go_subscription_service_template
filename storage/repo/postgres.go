@@ -23,3 +23,11 @@ type ResourceI interface {
 	Update(ctx context.Context, req *pb.Resource) (*pb.Resource, error)
 	Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error)
 }
+
+type SubscriptionCategoryI interface {
+	Create(ctx context.Context, req *pb.SubscriptionCategory) (*pb.SubscriptionCategory, error)
+	Get(ctx context.Context, req *pb.Id) (*pb.SubscriptionCategory, error)
+	Find(ctx context.Context, req *pb.GetListFilter) (*pb.SubscriptionCategories, error)
+	Update(ctx context.Context, req *pb.SubscriptionCategory) (*pb.SubscriptionCategory, error)
+	Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error)
+}

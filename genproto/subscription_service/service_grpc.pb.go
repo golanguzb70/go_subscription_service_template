@@ -568,3 +568,242 @@ var ResourceService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "service.proto",
 }
+
+const (
+	SubscriptionCategoryService_Create_FullMethodName = "/subscription_service.SubscriptionCategoryService/Create"
+	SubscriptionCategoryService_Get_FullMethodName    = "/subscription_service.SubscriptionCategoryService/Get"
+	SubscriptionCategoryService_Find_FullMethodName   = "/subscription_service.SubscriptionCategoryService/Find"
+	SubscriptionCategoryService_Update_FullMethodName = "/subscription_service.SubscriptionCategoryService/Update"
+	SubscriptionCategoryService_Delete_FullMethodName = "/subscription_service.SubscriptionCategoryService/Delete"
+)
+
+// SubscriptionCategoryServiceClient is the client API for SubscriptionCategoryService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type SubscriptionCategoryServiceClient interface {
+	Create(ctx context.Context, in *SubscriptionCategory, opts ...grpc.CallOption) (*SubscriptionCategory, error)
+	Get(ctx context.Context, in *Id, opts ...grpc.CallOption) (*SubscriptionCategory, error)
+	Find(ctx context.Context, in *GetListFilter, opts ...grpc.CallOption) (*SubscriptionCategories, error)
+	Update(ctx context.Context, in *SubscriptionCategory, opts ...grpc.CallOption) (*SubscriptionCategory, error)
+	Delete(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Empty, error)
+}
+
+type subscriptionCategoryServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewSubscriptionCategoryServiceClient(cc grpc.ClientConnInterface) SubscriptionCategoryServiceClient {
+	return &subscriptionCategoryServiceClient{cc}
+}
+
+func (c *subscriptionCategoryServiceClient) Create(ctx context.Context, in *SubscriptionCategory, opts ...grpc.CallOption) (*SubscriptionCategory, error) {
+	out := new(SubscriptionCategory)
+	err := c.cc.Invoke(ctx, SubscriptionCategoryService_Create_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionCategoryServiceClient) Get(ctx context.Context, in *Id, opts ...grpc.CallOption) (*SubscriptionCategory, error) {
+	out := new(SubscriptionCategory)
+	err := c.cc.Invoke(ctx, SubscriptionCategoryService_Get_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionCategoryServiceClient) Find(ctx context.Context, in *GetListFilter, opts ...grpc.CallOption) (*SubscriptionCategories, error) {
+	out := new(SubscriptionCategories)
+	err := c.cc.Invoke(ctx, SubscriptionCategoryService_Find_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionCategoryServiceClient) Update(ctx context.Context, in *SubscriptionCategory, opts ...grpc.CallOption) (*SubscriptionCategory, error) {
+	out := new(SubscriptionCategory)
+	err := c.cc.Invoke(ctx, SubscriptionCategoryService_Update_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionCategoryServiceClient) Delete(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, SubscriptionCategoryService_Delete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// SubscriptionCategoryServiceServer is the server API for SubscriptionCategoryService service.
+// All implementations must embed UnimplementedSubscriptionCategoryServiceServer
+// for forward compatibility
+type SubscriptionCategoryServiceServer interface {
+	Create(context.Context, *SubscriptionCategory) (*SubscriptionCategory, error)
+	Get(context.Context, *Id) (*SubscriptionCategory, error)
+	Find(context.Context, *GetListFilter) (*SubscriptionCategories, error)
+	Update(context.Context, *SubscriptionCategory) (*SubscriptionCategory, error)
+	Delete(context.Context, *Id) (*Empty, error)
+	mustEmbedUnimplementedSubscriptionCategoryServiceServer()
+}
+
+// UnimplementedSubscriptionCategoryServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedSubscriptionCategoryServiceServer struct {
+}
+
+func (UnimplementedSubscriptionCategoryServiceServer) Create(context.Context, *SubscriptionCategory) (*SubscriptionCategory, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedSubscriptionCategoryServiceServer) Get(context.Context, *Id) (*SubscriptionCategory, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedSubscriptionCategoryServiceServer) Find(context.Context, *GetListFilter) (*SubscriptionCategories, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Find not implemented")
+}
+func (UnimplementedSubscriptionCategoryServiceServer) Update(context.Context, *SubscriptionCategory) (*SubscriptionCategory, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (UnimplementedSubscriptionCategoryServiceServer) Delete(context.Context, *Id) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedSubscriptionCategoryServiceServer) mustEmbedUnimplementedSubscriptionCategoryServiceServer() {
+}
+
+// UnsafeSubscriptionCategoryServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SubscriptionCategoryServiceServer will
+// result in compilation errors.
+type UnsafeSubscriptionCategoryServiceServer interface {
+	mustEmbedUnimplementedSubscriptionCategoryServiceServer()
+}
+
+func RegisterSubscriptionCategoryServiceServer(s grpc.ServiceRegistrar, srv SubscriptionCategoryServiceServer) {
+	s.RegisterService(&SubscriptionCategoryService_ServiceDesc, srv)
+}
+
+func _SubscriptionCategoryService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubscriptionCategory)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionCategoryServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionCategoryService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionCategoryServiceServer).Create(ctx, req.(*SubscriptionCategory))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionCategoryService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Id)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionCategoryServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionCategoryService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionCategoryServiceServer).Get(ctx, req.(*Id))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionCategoryService_Find_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetListFilter)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionCategoryServiceServer).Find(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionCategoryService_Find_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionCategoryServiceServer).Find(ctx, req.(*GetListFilter))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionCategoryService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubscriptionCategory)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionCategoryServiceServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionCategoryService_Update_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionCategoryServiceServer).Update(ctx, req.(*SubscriptionCategory))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionCategoryService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Id)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionCategoryServiceServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionCategoryService_Delete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionCategoryServiceServer).Delete(ctx, req.(*Id))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// SubscriptionCategoryService_ServiceDesc is the grpc.ServiceDesc for SubscriptionCategoryService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var SubscriptionCategoryService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "subscription_service.SubscriptionCategoryService",
+	HandlerType: (*SubscriptionCategoryServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Create",
+			Handler:    _SubscriptionCategoryService_Create_Handler,
+		},
+		{
+			MethodName: "Get",
+			Handler:    _SubscriptionCategoryService_Get_Handler,
+		},
+		{
+			MethodName: "Find",
+			Handler:    _SubscriptionCategoryService_Find_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _SubscriptionCategoryService_Update_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _SubscriptionCategoryService_Delete_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "service.proto",
+}
