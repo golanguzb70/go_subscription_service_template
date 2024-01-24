@@ -65,9 +65,17 @@ func (r *resource) Find(ctx context.Context, req *pb.GetListFilter) (*pb.Resourc
 	)
 
 	query := r.db.Builder.Select("id, title, resource_key, created_at, updated_at").
-		From("resources").
-		Where(whereCondition).
-		OrderBy(orderBy).Offset(uint64((req.Page - 1) * req.Limit)).Limit(uint64(req.Limit))
+		From("resources")
+		
+	if len(req.Filters) > 0 {
+		query = query.Where(whereCondition)
+
+	}
+	if len(req.Sorts) > 0 {
+		query = query.OrderBy(orderBy)
+	}
+
+	query = query.Offset(uint64((req.Page - 1) * req.Limit)).Limit(uint64(req.Limit))
 
 	rows, err := query.RunWith(r.db.Db).Query()
 	if err != nil {

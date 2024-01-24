@@ -24,7 +24,9 @@ CREATE TABLE IF NOT EXISTS resources (
 CREATE TABLE IF NOT EXISTS resources_categories_m2m (
   id uuid PRIMARY KEY,
   category_id uuid NOT NULL REFERENCES resource_categories(id),
-  resource_id uuid NOT NULL REFERENCES resources(id)
+  resource_id uuid NOT NULL REFERENCES resources(id),
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  CONSTRAINT unique_category_resource_id UNIQUE (category_id, resource_id)
 );
 
 CREATE TABLE IF NOT EXISTS subscription_categories (

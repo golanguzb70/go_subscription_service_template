@@ -13,6 +13,9 @@ service ResourceCategoryService {
     rpc Find(GetListFilter) returns (ResourceCategories) {};
     rpc Update(ResourceCategory) returns (ResourceCategory) {};
     rpc Delete(Id) returns (Empty) {};
+
+    rpc AddResource(ResourceAndCategoryIds) returns (Empty) {};
+    rpc RemoveResource(ResourceAndCategoryIds) returns (Empty) {};
 }
 
 service ResourceService {

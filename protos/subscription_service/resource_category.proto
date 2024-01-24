@@ -3,16 +3,25 @@ syntax="proto3";
 package subscription_service;
 option go_package ="genproto/subscription_service";
 
+import "resource.proto";
+
 message ResourceCategory {
     string id = 1;
     string title = 2;
     string  key = 3;
     bool allow_all_resources = 4;
-    string created_at = 5;
-    string updated_at = 6;
+    repeated Resource resources = 5;
+    string created_at = 6;
+    string updated_at = 7;
 }
 
 message ResourceCategories {
     int32 count = 1;
     repeated ResourceCategory items = 2;
+}
+
+message ResourceAndCategoryIds {
+    string id = 1;
+    string category_id = 2;
+    repeated string resource_id = 3;
 }

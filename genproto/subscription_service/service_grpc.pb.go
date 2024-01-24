@@ -19,11 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ResourceCategoryService_Create_FullMethodName = "/subscription_service.ResourceCategoryService/Create"
-	ResourceCategoryService_Get_FullMethodName    = "/subscription_service.ResourceCategoryService/Get"
-	ResourceCategoryService_Find_FullMethodName   = "/subscription_service.ResourceCategoryService/Find"
-	ResourceCategoryService_Update_FullMethodName = "/subscription_service.ResourceCategoryService/Update"
-	ResourceCategoryService_Delete_FullMethodName = "/subscription_service.ResourceCategoryService/Delete"
+	ResourceCategoryService_Create_FullMethodName         = "/subscription_service.ResourceCategoryService/Create"
+	ResourceCategoryService_Get_FullMethodName            = "/subscription_service.ResourceCategoryService/Get"
+	ResourceCategoryService_Find_FullMethodName           = "/subscription_service.ResourceCategoryService/Find"
+	ResourceCategoryService_Update_FullMethodName         = "/subscription_service.ResourceCategoryService/Update"
+	ResourceCategoryService_Delete_FullMethodName         = "/subscription_service.ResourceCategoryService/Delete"
+	ResourceCategoryService_AddResource_FullMethodName    = "/subscription_service.ResourceCategoryService/AddResource"
+	ResourceCategoryService_RemoveResource_FullMethodName = "/subscription_service.ResourceCategoryService/RemoveResource"
 )
 
 // ResourceCategoryServiceClient is the client API for ResourceCategoryService service.
@@ -35,6 +37,8 @@ type ResourceCategoryServiceClient interface {
 	Find(ctx context.Context, in *GetListFilter, opts ...grpc.CallOption) (*ResourceCategories, error)
 	Update(ctx context.Context, in *ResourceCategory, opts ...grpc.CallOption) (*ResourceCategory, error)
 	Delete(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Empty, error)
+	AddResource(ctx context.Context, in *ResourceAndCategoryIds, opts ...grpc.CallOption) (*Empty, error)
+	RemoveResource(ctx context.Context, in *ResourceAndCategoryIds, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type resourceCategoryServiceClient struct {
@@ -90,6 +94,24 @@ func (c *resourceCategoryServiceClient) Delete(ctx context.Context, in *Id, opts
 	return out, nil
 }
 
+func (c *resourceCategoryServiceClient) AddResource(ctx context.Context, in *ResourceAndCategoryIds, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, ResourceCategoryService_AddResource_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *resourceCategoryServiceClient) RemoveResource(ctx context.Context, in *ResourceAndCategoryIds, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, ResourceCategoryService_RemoveResource_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ResourceCategoryServiceServer is the server API for ResourceCategoryService service.
 // All implementations must embed UnimplementedResourceCategoryServiceServer
 // for forward compatibility
@@ -99,6 +121,8 @@ type ResourceCategoryServiceServer interface {
 	Find(context.Context, *GetListFilter) (*ResourceCategories, error)
 	Update(context.Context, *ResourceCategory) (*ResourceCategory, error)
 	Delete(context.Context, *Id) (*Empty, error)
+	AddResource(context.Context, *ResourceAndCategoryIds) (*Empty, error)
+	RemoveResource(context.Context, *ResourceAndCategoryIds) (*Empty, error)
 	mustEmbedUnimplementedResourceCategoryServiceServer()
 }
 
@@ -120,6 +144,12 @@ func (UnimplementedResourceCategoryServiceServer) Update(context.Context, *Resou
 }
 func (UnimplementedResourceCategoryServiceServer) Delete(context.Context, *Id) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedResourceCategoryServiceServer) AddResource(context.Context, *ResourceAndCategoryIds) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddResource not implemented")
+}
+func (UnimplementedResourceCategoryServiceServer) RemoveResource(context.Context, *ResourceAndCategoryIds) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveResource not implemented")
 }
 func (UnimplementedResourceCategoryServiceServer) mustEmbedUnimplementedResourceCategoryServiceServer() {
 }
@@ -225,6 +255,42 @@ func _ResourceCategoryService_Delete_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ResourceCategoryService_AddResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResourceAndCategoryIds)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResourceCategoryServiceServer).AddResource(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ResourceCategoryService_AddResource_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResourceCategoryServiceServer).AddResource(ctx, req.(*ResourceAndCategoryIds))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ResourceCategoryService_RemoveResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResourceAndCategoryIds)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResourceCategoryServiceServer).RemoveResource(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ResourceCategoryService_RemoveResource_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResourceCategoryServiceServer).RemoveResource(ctx, req.(*ResourceAndCategoryIds))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ResourceCategoryService_ServiceDesc is the grpc.ServiceDesc for ResourceCategoryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -251,6 +317,14 @@ var ResourceCategoryService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _ResourceCategoryService_Delete_Handler,
+		},
+		{
+			MethodName: "AddResource",
+			Handler:    _ResourceCategoryService_AddResource_Handler,
+		},
+		{
+			MethodName: "RemoveResource",
+			Handler:    _ResourceCategoryService_RemoveResource_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

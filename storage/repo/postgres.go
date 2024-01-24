@@ -12,6 +12,8 @@ type ResourceCategoryI interface {
 	Find(ctx context.Context, req *pb.GetListFilter) (*pb.ResourceCategories, error)
 	Update(ctx context.Context, req *pb.ResourceCategory) (*pb.ResourceCategory, error)
 	Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error)
+	AddResource(ctx context.Context, req *pb.ResourceAndCategoryIds) (*pb.Empty, error)
+	RemoveResource(ctx context.Context, req *pb.ResourceAndCategoryIds) (*pb.Empty, error)
 }
 
 type ResourceI interface {
@@ -21,4 +23,3 @@ type ResourceI interface {
 	Update(ctx context.Context, req *pb.Resource) (*pb.Resource, error)
 	Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error)
 }
-

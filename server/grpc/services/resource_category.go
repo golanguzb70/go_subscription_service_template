@@ -44,3 +44,11 @@ func (s *ResourceCategoryService) Update(ctx context.Context, req *pb.ResourceCa
 func (s *ResourceCategoryService) Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error) {
 	return s.storage.ResourceCategory().Delete(ctx, req)
 }
+
+func (s *ResourceCategoryService) AddResource(ctx context.Context, req *pb.ResourceAndCategoryIds) (*pb.Empty, error) {
+	return s.storage.ResourceCategory().AddResource(ctx, req)
+}
+
+func (s *ResourceCategoryService) RemoveResource(ctx context.Context, req *pb.ResourceAndCategoryIds) (*pb.Empty, error) {
+	return s.storage.ResourceCategory().RemoveResource(ctx, req)
+}
