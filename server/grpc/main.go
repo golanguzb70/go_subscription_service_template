@@ -22,6 +22,7 @@ type GRPCService struct {
 	ResourceCategoryService     *services.ResourceCategoryService
 	SubscriptionCategoryService *services.SubscriptionCategoryService
 	ResourceService             *services.ResourceService
+	SubscriptionService         *services.SubscriptionService
 }
 
 func New(cfg *config.Config, log l.Logger) (*GRPCService, error) {
@@ -41,6 +42,7 @@ func New(cfg *config.Config, log l.Logger) (*GRPCService, error) {
 		ResourceCategoryService:     services.NewResourceCategoryService(storageObj, log, grpcClient),
 		ResourceService:             services.NewResourceService(storageObj, log, grpcClient),
 		SubscriptionCategoryService: services.NewSubscriptionCategoryService(storageObj, log, grpcClient),
+		SubscriptionService:         services.NewSubscriptionService(storageObj, log, grpcClient),
 	}, nil
 }
 
@@ -50,6 +52,7 @@ func (service *GRPCService) Run(logger l.Logger, cfg *config.Config) {
 	pb.RegisterResourceCategoryServiceServer(server, service.ResourceCategoryService)
 	pb.RegisterResourceServiceServer(server, service.ResourceService)
 	pb.RegisterSubscriptionCategoryServiceServer(server, service.SubscriptionCategoryService)
+	pb.RegisterSubscriptionServiceServer(server, service.SubscriptionService)
 
 	listener, err := net.Listen("tcp", cfg.RPCPort)
 	if err != nil {

@@ -1,0 +1,23 @@
+syntax="proto3";
+
+package subscription_service;
+option go_package ="genproto/subscription_service";
+
+message Subscription {
+    string id = 1;
+    string title_uz = 2;
+    string title_ru = 3;
+    string title_en = 4;
+    bool   active = 5;
+    int32  price = 6;
+    string duration_type = 7;
+    int32  duration = 8;
+    string category_id = 9;
+    string created_at = 10;
+    string updated_at = 11;
+}
+
+message Subscriptions {
+    int32 count = 1;
+    repeated Subscription items = 2;
+}

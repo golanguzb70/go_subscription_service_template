@@ -33,3 +33,11 @@ type SubscriptionCategoryI interface {
 	AddResourceCategory(ctx context.Context, req *pb.SubscriptionResourceCategoryIds) (*pb.Empty, error)
 	RemoveResourceCategory(ctx context.Context, req *pb.SubscriptionResourceCategoryIds) (*pb.Empty, error)
 }
+
+type SubscriptionI interface {
+	Create(ctx context.Context, req *pb.Subscription) (*pb.Subscription, error)
+	Get(ctx context.Context, req *pb.Id) (*pb.Subscription, error)
+	Find(ctx context.Context, req *pb.GetListFilter) (*pb.Subscriptions, error)
+	Update(ctx context.Context, req *pb.Subscription) (*pb.Subscription, error)
+	Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error)
+}
