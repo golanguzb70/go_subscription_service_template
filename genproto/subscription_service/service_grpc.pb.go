@@ -1119,3 +1119,94 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "service.proto",
 }
+
+const (
+	UserSubscriptionService_Buy_FullMethodName = "/subscription_service.UserSubscriptionService/Buy"
+)
+
+// UserSubscriptionServiceClient is the client API for UserSubscriptionService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type UserSubscriptionServiceClient interface {
+	Buy(ctx context.Context, in *BuyRequest, opts ...grpc.CallOption) (*Empty, error)
+}
+
+type userSubscriptionServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewUserSubscriptionServiceClient(cc grpc.ClientConnInterface) UserSubscriptionServiceClient {
+	return &userSubscriptionServiceClient{cc}
+}
+
+func (c *userSubscriptionServiceClient) Buy(ctx context.Context, in *BuyRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, UserSubscriptionService_Buy_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UserSubscriptionServiceServer is the server API for UserSubscriptionService service.
+// All implementations must embed UnimplementedUserSubscriptionServiceServer
+// for forward compatibility
+type UserSubscriptionServiceServer interface {
+	Buy(context.Context, *BuyRequest) (*Empty, error)
+	mustEmbedUnimplementedUserSubscriptionServiceServer()
+}
+
+// UnimplementedUserSubscriptionServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedUserSubscriptionServiceServer struct {
+}
+
+func (UnimplementedUserSubscriptionServiceServer) Buy(context.Context, *BuyRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Buy not implemented")
+}
+func (UnimplementedUserSubscriptionServiceServer) mustEmbedUnimplementedUserSubscriptionServiceServer() {
+}
+
+// UnsafeUserSubscriptionServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UserSubscriptionServiceServer will
+// result in compilation errors.
+type UnsafeUserSubscriptionServiceServer interface {
+	mustEmbedUnimplementedUserSubscriptionServiceServer()
+}
+
+func RegisterUserSubscriptionServiceServer(s grpc.ServiceRegistrar, srv UserSubscriptionServiceServer) {
+	s.RegisterService(&UserSubscriptionService_ServiceDesc, srv)
+}
+
+func _UserSubscriptionService_Buy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BuyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserSubscriptionServiceServer).Buy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserSubscriptionService_Buy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserSubscriptionServiceServer).Buy(ctx, req.(*BuyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// UserSubscriptionService_ServiceDesc is the grpc.ServiceDesc for UserSubscriptionService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var UserSubscriptionService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "subscription_service.UserSubscriptionService",
+	HandlerType: (*UserSubscriptionServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Buy",
+			Handler:    _UserSubscriptionService_Buy_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "service.proto",
+}

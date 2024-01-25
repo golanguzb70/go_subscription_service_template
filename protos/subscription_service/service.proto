@@ -7,6 +7,7 @@ import "resource_category.proto";
 import "subscription_categories.proto";
 import "resource.proto";
 import "subscription.proto";
+import "user_subscription.proto";
 import "common.proto";
 
 service ResourceCategoryService {
@@ -43,4 +44,8 @@ service SubscriptionService {
     rpc Find(GetListFilter) returns (Subscriptions) {};
     rpc Update(Subscription) returns (Subscription) {};
     rpc Delete(Id) returns (Empty) {};
+}
+
+service UserSubscriptionService {
+    rpc Buy(BuyRequest) returns (Empty) {}
 }

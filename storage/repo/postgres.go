@@ -4,6 +4,7 @@ import (
 	"context"
 
 	pb "github.com/golanguzb70/go_subscription_service/genproto/subscription_service"
+	"github.com/golanguzb70/go_subscription_service/storage/models"
 )
 
 type ResourceCategoryI interface {
@@ -40,4 +41,8 @@ type SubscriptionI interface {
 	Find(ctx context.Context, req *pb.GetListFilter) (*pb.Subscriptions, error)
 	Update(ctx context.Context, req *pb.Subscription) (*pb.Subscription, error)
 	Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error)
+}
+
+type UserSubscriptionI interface {
+	Buy(ctx context.Context, req *models.CreateUserSubscriptionReq) (*pb.Empty, error)
 }

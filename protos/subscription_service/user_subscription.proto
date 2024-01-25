@@ -1,0 +1,11 @@
+syntax="proto3";
+
+package subscription_service;
+option go_package ="genproto/subscription_service";
+
+
+message BuyRequest {
+    string user_id = 1;
+    string subscription_id = 2;
+    string pocket_id = 3;
+}
