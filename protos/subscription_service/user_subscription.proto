@@ -9,3 +9,13 @@ message BuyRequest {
     string subscription_id = 2;
     string pocket_id = 3;
 }
+
+message CheckSubscriptionRequest {
+    string user_key = 1;
+    string resource_category_key = 2;
+    string resource_key = 3;
+}
+
+message  CheckSubscriptionResponse {
+    bool has_access = 1;
+}

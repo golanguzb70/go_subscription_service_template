@@ -165,15 +165,23 @@ var file_service_proto_rawDesc = []byte{
 	0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
 	0x2e, 0x49, 0x64, 0x1a, 0x1b, 0x2e, 0x73, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69,
 	0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79,
-	0x22, 0x00, 0x32, 0x61, 0x0a, 0x17, 0x55, 0x73, 0x65, 0x72, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x46, 0x0a,
-	0x03, 0x42, 0x75, 0x79, 0x12, 0x20, 0x2e, 0x73, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
-	0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x42, 0x75, 0x79, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x73, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69,
-	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x45, 0x6d,
-	0x70, 0x74, 0x79, 0x22, 0x00, 0x42, 0x1f, 0x5a, 0x1d, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x2f, 0x73, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73,
-	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x00, 0x32, 0xd9, 0x01, 0x0a, 0x17, 0x55, 0x73, 0x65, 0x72, 0x53, 0x75, 0x62, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x46,
+	0x0a, 0x03, 0x42, 0x75, 0x79, 0x12, 0x20, 0x2e, 0x73, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x42, 0x75, 0x79,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x73, 0x75, 0x62, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x45,
+	0x6d, 0x70, 0x74, 0x79, 0x22, 0x00, 0x12, 0x76, 0x0a, 0x11, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x53,
+	0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2e, 0x2e, 0x73, 0x75,
+	0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x2e, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x73, 0x75,
+	0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x2e, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x1f,
+	0x5a, 0x1d, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x73, 0x75, 0x62, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_service_proto_goTypes = []interface{}{
@@ -186,11 +194,13 @@ var file_service_proto_goTypes = []interface{}{
 	(*SubscriptionResourceCategoryIds)(nil), // 6: subscription_service.SubscriptionResourceCategoryIds
 	(*Subscription)(nil),                    // 7: subscription_service.Subscription
 	(*BuyRequest)(nil),                      // 8: subscription_service.BuyRequest
-	(*ResourceCategories)(nil),              // 9: subscription_service.ResourceCategories
-	(*Empty)(nil),                           // 10: subscription_service.Empty
-	(*Resources)(nil),                       // 11: subscription_service.Resources
-	(*SubscriptionCategories)(nil),          // 12: subscription_service.SubscriptionCategories
-	(*Subscriptions)(nil),                   // 13: subscription_service.Subscriptions
+	(*CheckSubscriptionRequest)(nil),        // 9: subscription_service.CheckSubscriptionRequest
+	(*ResourceCategories)(nil),              // 10: subscription_service.ResourceCategories
+	(*Empty)(nil),                           // 11: subscription_service.Empty
+	(*Resources)(nil),                       // 12: subscription_service.Resources
+	(*SubscriptionCategories)(nil),          // 13: subscription_service.SubscriptionCategories
+	(*Subscriptions)(nil),                   // 14: subscription_service.Subscriptions
+	(*CheckSubscriptionResponse)(nil),       // 15: subscription_service.CheckSubscriptionResponse
 }
 var file_service_proto_depIdxs = []int32{
 	0,  // 0: subscription_service.ResourceCategoryService.Create:input_type -> subscription_service.ResourceCategory
@@ -218,33 +228,35 @@ var file_service_proto_depIdxs = []int32{
 	7,  // 22: subscription_service.SubscriptionService.Update:input_type -> subscription_service.Subscription
 	1,  // 23: subscription_service.SubscriptionService.Delete:input_type -> subscription_service.Id
 	8,  // 24: subscription_service.UserSubscriptionService.Buy:input_type -> subscription_service.BuyRequest
-	0,  // 25: subscription_service.ResourceCategoryService.Create:output_type -> subscription_service.ResourceCategory
-	0,  // 26: subscription_service.ResourceCategoryService.Get:output_type -> subscription_service.ResourceCategory
-	9,  // 27: subscription_service.ResourceCategoryService.Find:output_type -> subscription_service.ResourceCategories
-	0,  // 28: subscription_service.ResourceCategoryService.Update:output_type -> subscription_service.ResourceCategory
-	10, // 29: subscription_service.ResourceCategoryService.Delete:output_type -> subscription_service.Empty
-	10, // 30: subscription_service.ResourceCategoryService.AddResource:output_type -> subscription_service.Empty
-	10, // 31: subscription_service.ResourceCategoryService.RemoveResource:output_type -> subscription_service.Empty
-	4,  // 32: subscription_service.ResourceService.Create:output_type -> subscription_service.Resource
-	4,  // 33: subscription_service.ResourceService.Get:output_type -> subscription_service.Resource
-	11, // 34: subscription_service.ResourceService.Find:output_type -> subscription_service.Resources
-	4,  // 35: subscription_service.ResourceService.Update:output_type -> subscription_service.Resource
-	10, // 36: subscription_service.ResourceService.Delete:output_type -> subscription_service.Empty
-	5,  // 37: subscription_service.SubscriptionCategoryService.Create:output_type -> subscription_service.SubscriptionCategory
-	5,  // 38: subscription_service.SubscriptionCategoryService.Get:output_type -> subscription_service.SubscriptionCategory
-	12, // 39: subscription_service.SubscriptionCategoryService.Find:output_type -> subscription_service.SubscriptionCategories
-	5,  // 40: subscription_service.SubscriptionCategoryService.Update:output_type -> subscription_service.SubscriptionCategory
-	10, // 41: subscription_service.SubscriptionCategoryService.Delete:output_type -> subscription_service.Empty
-	10, // 42: subscription_service.SubscriptionCategoryService.AddResourceCategory:output_type -> subscription_service.Empty
-	10, // 43: subscription_service.SubscriptionCategoryService.RemoveResourceCategory:output_type -> subscription_service.Empty
-	7,  // 44: subscription_service.SubscriptionService.Create:output_type -> subscription_service.Subscription
-	7,  // 45: subscription_service.SubscriptionService.Get:output_type -> subscription_service.Subscription
-	13, // 46: subscription_service.SubscriptionService.Find:output_type -> subscription_service.Subscriptions
-	7,  // 47: subscription_service.SubscriptionService.Update:output_type -> subscription_service.Subscription
-	10, // 48: subscription_service.SubscriptionService.Delete:output_type -> subscription_service.Empty
-	10, // 49: subscription_service.UserSubscriptionService.Buy:output_type -> subscription_service.Empty
-	25, // [25:50] is the sub-list for method output_type
-	0,  // [0:25] is the sub-list for method input_type
+	9,  // 25: subscription_service.UserSubscriptionService.CheckSubscription:input_type -> subscription_service.CheckSubscriptionRequest
+	0,  // 26: subscription_service.ResourceCategoryService.Create:output_type -> subscription_service.ResourceCategory
+	0,  // 27: subscription_service.ResourceCategoryService.Get:output_type -> subscription_service.ResourceCategory
+	10, // 28: subscription_service.ResourceCategoryService.Find:output_type -> subscription_service.ResourceCategories
+	0,  // 29: subscription_service.ResourceCategoryService.Update:output_type -> subscription_service.ResourceCategory
+	11, // 30: subscription_service.ResourceCategoryService.Delete:output_type -> subscription_service.Empty
+	11, // 31: subscription_service.ResourceCategoryService.AddResource:output_type -> subscription_service.Empty
+	11, // 32: subscription_service.ResourceCategoryService.RemoveResource:output_type -> subscription_service.Empty
+	4,  // 33: subscription_service.ResourceService.Create:output_type -> subscription_service.Resource
+	4,  // 34: subscription_service.ResourceService.Get:output_type -> subscription_service.Resource
+	12, // 35: subscription_service.ResourceService.Find:output_type -> subscription_service.Resources
+	4,  // 36: subscription_service.ResourceService.Update:output_type -> subscription_service.Resource
+	11, // 37: subscription_service.ResourceService.Delete:output_type -> subscription_service.Empty
+	5,  // 38: subscription_service.SubscriptionCategoryService.Create:output_type -> subscription_service.SubscriptionCategory
+	5,  // 39: subscription_service.SubscriptionCategoryService.Get:output_type -> subscription_service.SubscriptionCategory
+	13, // 40: subscription_service.SubscriptionCategoryService.Find:output_type -> subscription_service.SubscriptionCategories
+	5,  // 41: subscription_service.SubscriptionCategoryService.Update:output_type -> subscription_service.SubscriptionCategory
+	11, // 42: subscription_service.SubscriptionCategoryService.Delete:output_type -> subscription_service.Empty
+	11, // 43: subscription_service.SubscriptionCategoryService.AddResourceCategory:output_type -> subscription_service.Empty
+	11, // 44: subscription_service.SubscriptionCategoryService.RemoveResourceCategory:output_type -> subscription_service.Empty
+	7,  // 45: subscription_service.SubscriptionService.Create:output_type -> subscription_service.Subscription
+	7,  // 46: subscription_service.SubscriptionService.Get:output_type -> subscription_service.Subscription
+	14, // 47: subscription_service.SubscriptionService.Find:output_type -> subscription_service.Subscriptions
+	7,  // 48: subscription_service.SubscriptionService.Update:output_type -> subscription_service.Subscription
+	11, // 49: subscription_service.SubscriptionService.Delete:output_type -> subscription_service.Empty
+	11, // 50: subscription_service.UserSubscriptionService.Buy:output_type -> subscription_service.Empty
+	15, // 51: subscription_service.UserSubscriptionService.CheckSubscription:output_type -> subscription_service.CheckSubscriptionResponse
+	26, // [26:52] is the sub-list for method output_type
+	0,  // [0:26] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name

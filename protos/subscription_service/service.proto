@@ -47,5 +47,6 @@ service SubscriptionService {
 }
 
 service UserSubscriptionService {
-    rpc Buy(BuyRequest) returns (Empty) {}
+    rpc Buy(BuyRequest) returns (Empty) {};
+    rpc CheckSubscription(CheckSubscriptionRequest) returns (CheckSubscriptionResponse) {};
 }

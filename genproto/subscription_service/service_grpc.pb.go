@@ -1121,7 +1121,8 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	UserSubscriptionService_Buy_FullMethodName = "/subscription_service.UserSubscriptionService/Buy"
+	UserSubscriptionService_Buy_FullMethodName               = "/subscription_service.UserSubscriptionService/Buy"
+	UserSubscriptionService_CheckSubscription_FullMethodName = "/subscription_service.UserSubscriptionService/CheckSubscription"
 )
 
 // UserSubscriptionServiceClient is the client API for UserSubscriptionService service.
@@ -1129,6 +1130,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserSubscriptionServiceClient interface {
 	Buy(ctx context.Context, in *BuyRequest, opts ...grpc.CallOption) (*Empty, error)
+	CheckSubscription(ctx context.Context, in *CheckSubscriptionRequest, opts ...grpc.CallOption) (*CheckSubscriptionResponse, error)
 }
 
 type userSubscriptionServiceClient struct {
@@ -1148,11 +1150,21 @@ func (c *userSubscriptionServiceClient) Buy(ctx context.Context, in *BuyRequest,
 	return out, nil
 }
 
+func (c *userSubscriptionServiceClient) CheckSubscription(ctx context.Context, in *CheckSubscriptionRequest, opts ...grpc.CallOption) (*CheckSubscriptionResponse, error) {
+	out := new(CheckSubscriptionResponse)
+	err := c.cc.Invoke(ctx, UserSubscriptionService_CheckSubscription_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserSubscriptionServiceServer is the server API for UserSubscriptionService service.
 // All implementations must embed UnimplementedUserSubscriptionServiceServer
 // for forward compatibility
 type UserSubscriptionServiceServer interface {
 	Buy(context.Context, *BuyRequest) (*Empty, error)
+	CheckSubscription(context.Context, *CheckSubscriptionRequest) (*CheckSubscriptionResponse, error)
 	mustEmbedUnimplementedUserSubscriptionServiceServer()
 }
 
@@ -1162,6 +1174,9 @@ type UnimplementedUserSubscriptionServiceServer struct {
 
 func (UnimplementedUserSubscriptionServiceServer) Buy(context.Context, *BuyRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Buy not implemented")
+}
+func (UnimplementedUserSubscriptionServiceServer) CheckSubscription(context.Context, *CheckSubscriptionRequest) (*CheckSubscriptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckSubscription not implemented")
 }
 func (UnimplementedUserSubscriptionServiceServer) mustEmbedUnimplementedUserSubscriptionServiceServer() {
 }
@@ -1195,6 +1210,24 @@ func _UserSubscriptionService_Buy_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserSubscriptionService_CheckSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserSubscriptionServiceServer).CheckSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserSubscriptionService_CheckSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserSubscriptionServiceServer).CheckSubscription(ctx, req.(*CheckSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserSubscriptionService_ServiceDesc is the grpc.ServiceDesc for UserSubscriptionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1205,6 +1238,10 @@ var UserSubscriptionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Buy",
 			Handler:    _UserSubscriptionService_Buy_Handler,
+		},
+		{
+			MethodName: "CheckSubscription",
+			Handler:    _UserSubscriptionService_CheckSubscription_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

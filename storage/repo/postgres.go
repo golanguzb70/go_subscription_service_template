@@ -45,4 +45,5 @@ type SubscriptionI interface {
 
 type UserSubscriptionI interface {
 	Buy(ctx context.Context, req *models.CreateUserSubscriptionReq) (*pb.Empty, error)
+	CheckSubscription(ctx context.Context, req *pb.CheckSubscriptionRequest) (*pb.CheckSubscriptionResponse, error)
 }
