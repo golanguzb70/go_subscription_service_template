@@ -30,4 +30,6 @@ type SubscriptionCategoryI interface {
 	Find(ctx context.Context, req *pb.GetListFilter) (*pb.SubscriptionCategories, error)
 	Update(ctx context.Context, req *pb.SubscriptionCategory) (*pb.SubscriptionCategory, error)
 	Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error)
+	AddResourceCategory(ctx context.Context, req *pb.SubscriptionResourceCategoryIds) (*pb.Empty, error)
+	RemoveResourceCategory(ctx context.Context, req *pb.SubscriptionResourceCategoryIds) (*pb.Empty, error)
 }

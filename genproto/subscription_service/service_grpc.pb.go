@@ -570,11 +570,13 @@ var ResourceService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	SubscriptionCategoryService_Create_FullMethodName = "/subscription_service.SubscriptionCategoryService/Create"
-	SubscriptionCategoryService_Get_FullMethodName    = "/subscription_service.SubscriptionCategoryService/Get"
-	SubscriptionCategoryService_Find_FullMethodName   = "/subscription_service.SubscriptionCategoryService/Find"
-	SubscriptionCategoryService_Update_FullMethodName = "/subscription_service.SubscriptionCategoryService/Update"
-	SubscriptionCategoryService_Delete_FullMethodName = "/subscription_service.SubscriptionCategoryService/Delete"
+	SubscriptionCategoryService_Create_FullMethodName                 = "/subscription_service.SubscriptionCategoryService/Create"
+	SubscriptionCategoryService_Get_FullMethodName                    = "/subscription_service.SubscriptionCategoryService/Get"
+	SubscriptionCategoryService_Find_FullMethodName                   = "/subscription_service.SubscriptionCategoryService/Find"
+	SubscriptionCategoryService_Update_FullMethodName                 = "/subscription_service.SubscriptionCategoryService/Update"
+	SubscriptionCategoryService_Delete_FullMethodName                 = "/subscription_service.SubscriptionCategoryService/Delete"
+	SubscriptionCategoryService_AddResourceCategory_FullMethodName    = "/subscription_service.SubscriptionCategoryService/AddResourceCategory"
+	SubscriptionCategoryService_RemoveResourceCategory_FullMethodName = "/subscription_service.SubscriptionCategoryService/RemoveResourceCategory"
 )
 
 // SubscriptionCategoryServiceClient is the client API for SubscriptionCategoryService service.
@@ -586,6 +588,8 @@ type SubscriptionCategoryServiceClient interface {
 	Find(ctx context.Context, in *GetListFilter, opts ...grpc.CallOption) (*SubscriptionCategories, error)
 	Update(ctx context.Context, in *SubscriptionCategory, opts ...grpc.CallOption) (*SubscriptionCategory, error)
 	Delete(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Empty, error)
+	AddResourceCategory(ctx context.Context, in *SubscriptionResourceCategoryIds, opts ...grpc.CallOption) (*Empty, error)
+	RemoveResourceCategory(ctx context.Context, in *SubscriptionResourceCategoryIds, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type subscriptionCategoryServiceClient struct {
@@ -641,6 +645,24 @@ func (c *subscriptionCategoryServiceClient) Delete(ctx context.Context, in *Id, 
 	return out, nil
 }
 
+func (c *subscriptionCategoryServiceClient) AddResourceCategory(ctx context.Context, in *SubscriptionResourceCategoryIds, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, SubscriptionCategoryService_AddResourceCategory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionCategoryServiceClient) RemoveResourceCategory(ctx context.Context, in *SubscriptionResourceCategoryIds, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, SubscriptionCategoryService_RemoveResourceCategory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SubscriptionCategoryServiceServer is the server API for SubscriptionCategoryService service.
 // All implementations must embed UnimplementedSubscriptionCategoryServiceServer
 // for forward compatibility
@@ -650,6 +672,8 @@ type SubscriptionCategoryServiceServer interface {
 	Find(context.Context, *GetListFilter) (*SubscriptionCategories, error)
 	Update(context.Context, *SubscriptionCategory) (*SubscriptionCategory, error)
 	Delete(context.Context, *Id) (*Empty, error)
+	AddResourceCategory(context.Context, *SubscriptionResourceCategoryIds) (*Empty, error)
+	RemoveResourceCategory(context.Context, *SubscriptionResourceCategoryIds) (*Empty, error)
 	mustEmbedUnimplementedSubscriptionCategoryServiceServer()
 }
 
@@ -671,6 +695,12 @@ func (UnimplementedSubscriptionCategoryServiceServer) Update(context.Context, *S
 }
 func (UnimplementedSubscriptionCategoryServiceServer) Delete(context.Context, *Id) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedSubscriptionCategoryServiceServer) AddResourceCategory(context.Context, *SubscriptionResourceCategoryIds) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddResourceCategory not implemented")
+}
+func (UnimplementedSubscriptionCategoryServiceServer) RemoveResourceCategory(context.Context, *SubscriptionResourceCategoryIds) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveResourceCategory not implemented")
 }
 func (UnimplementedSubscriptionCategoryServiceServer) mustEmbedUnimplementedSubscriptionCategoryServiceServer() {
 }
@@ -776,6 +806,42 @@ func _SubscriptionCategoryService_Delete_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SubscriptionCategoryService_AddResourceCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubscriptionResourceCategoryIds)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionCategoryServiceServer).AddResourceCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionCategoryService_AddResourceCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionCategoryServiceServer).AddResourceCategory(ctx, req.(*SubscriptionResourceCategoryIds))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionCategoryService_RemoveResourceCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubscriptionResourceCategoryIds)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionCategoryServiceServer).RemoveResourceCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionCategoryService_RemoveResourceCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionCategoryServiceServer).RemoveResourceCategory(ctx, req.(*SubscriptionResourceCategoryIds))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SubscriptionCategoryService_ServiceDesc is the grpc.ServiceDesc for SubscriptionCategoryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -802,6 +868,14 @@ var SubscriptionCategoryService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _SubscriptionCategoryService_Delete_Handler,
+		},
+		{
+			MethodName: "AddResourceCategory",
+			Handler:    _SubscriptionCategoryService_AddResourceCategory_Handler,
+		},
+		{
+			MethodName: "RemoveResourceCategory",
+			Handler:    _SubscriptionCategoryService_RemoveResourceCategory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

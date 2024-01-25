@@ -44,3 +44,11 @@ func (s *SubscriptionCategoryService) Update(ctx context.Context, req *pb.Subscr
 func (s *SubscriptionCategoryService) Delete(ctx context.Context, req *pb.Id) (*pb.Empty, error) {
 	return s.storage.SubscriptionCategory().Delete(ctx, req)
 }
+
+func (s *SubscriptionCategoryService) AddResourceCategory(ctx context.Context, req *pb.SubscriptionResourceCategoryIds) (*pb.Empty, error) {
+	return s.storage.SubscriptionCategory().AddResourceCategory(ctx, req)
+}
+
+func (s *SubscriptionCategoryService) RemoveResourceCategory(ctx context.Context, req *pb.SubscriptionResourceCategoryIds) (*pb.Empty, error) {
+	return s.storage.SubscriptionCategory().RemoveResourceCategory(ctx, req)
+}

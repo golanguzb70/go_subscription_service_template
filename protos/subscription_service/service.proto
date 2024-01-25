@@ -32,5 +32,7 @@ service SubscriptionCategoryService {
     rpc Find(GetListFilter) returns (SubscriptionCategories) {};
     rpc Update(SubscriptionCategory) returns (SubscriptionCategory) {};
     rpc Delete(Id) returns (Empty) {};
+    rpc AddResourceCategory(SubscriptionResourceCategoryIds) returns (Empty) {}
+    rpc RemoveResourceCategory(SubscriptionResourceCategoryIds) returns (Empty) {}
 }
 

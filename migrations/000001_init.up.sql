@@ -52,8 +52,7 @@ CREATE TABLE IF NOT EXISTS resource_subsription_categories (
   resource_category_id uuid NOT NULL REFERENCES resource_categories(id),
   subscription_category_id uuid NOT NULL REFERENCES subscription_categories(id),
   created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
-  deleted_at TIMESTAMP WITHOUT TIME ZONE
+  CONSTRAINT unique_resource_subscription_category_resource_id UNIQUE (resource_category_id, subscription_category_id)
 );
 
 CREATE TABLE IF NOT EXISTS subscriptions (

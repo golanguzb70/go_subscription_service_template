@@ -10,6 +10,7 @@ import (
 	"github.com/golanguzb70/go_subscription_service/pkg/db"
 	"github.com/golanguzb70/go_subscription_service/pkg/logger"
 	"github.com/golanguzb70/go_subscription_service/storage/repo"
+	"github.com/google/uuid"
 )
 
 type subscriptionCategory struct {
@@ -25,6 +26,7 @@ func NewSubscriptionCategoryRepo(db *db.Postgres, log logger.Logger) repo.Subscr
 }
 
 func (r *subscriptionCategory) Create(ctx context.Context, req *pb.SubscriptionCategory) (*pb.SubscriptionCategory, error) {
+	fmt.Println(req)
 	query := r.db.Builder.Insert("subscription_categories").
 		Columns(`
 			id, title_uz, title_ru, title_en, description_uz, description_ru, description_en,
@@ -60,9 +62,34 @@ func (r *subscriptionCategory) Get(ctx context.Context, req *pb.Id) (*pb.Subscri
 		&res.Id, &res.TitleUz, &res.TitleRu, &res.TitleEn, &res.DescriptionUz, &res.DescriptionRu, &res.DescriptionEn,
 		&res.ImageUz, &res.ImageRu, &res.ImageEn, &res.Active, &res.Visible, &res.CreatedAt, &res.UpdatedAt,
 	)
-
 	if err != nil {
 		return res, HandleDatabaseError(err, r.log, "getting subscription category")
+	}
+
+	query = r.db.Builder.Select("r.id, r.title, r.category_key, r.allow_all_resources, r.created_at, r.updated_at").
+		From("resource_categories r").
+		InnerJoin("resource_subsription_categories rs ON rs.resource_category_id = r.id").
+		Where(squirrel.Eq{"subscription_category_id": res.Id}).
+		OrderBy("r.title ASC")
+
+	rows, err := query.RunWith(r.db.Db).Query()
+	if err != nil {
+		return nil, HandleDatabaseError(err, r.log, "error while finding resource categories")
+	}
+	
+	defer rows.Close()
+
+	for rows.Next() {
+		temp := &pb.ResourceCategory{}
+		err = rows.Scan(
+			&temp.Id, &temp.Title, &temp.Key, &temp.AllowAllResources,
+			&temp.CreatedAt, &temp.UpdatedAt,
+		)
+		if err != nil {
+			return nil, HandleDatabaseError(err, r.log, "error while scanning resource_category")
+		}
+
+		res.ResourceCategories = append(res.ResourceCategories, temp)
 	}
 
 	return res, HandleDatabaseError(err, r.log, "getting subscription category")
@@ -154,4 +181,26 @@ func (r *subscriptionCategory) Delete(ctx context.Context, req *pb.Id) (*pb.Empt
 	query := r.db.Builder.Delete("subscription_categories").Where(squirrel.Eq{"id": req.Id})
 	_, err := query.RunWith(r.db.Db).Exec()
 	return &pb.Empty{}, HandleDatabaseError(err, r.log, "delete from resource categories")
+}
+
+func (r *subscriptionCategory) AddResourceCategory(ctx context.Context, req *pb.SubscriptionResourceCategoryIds) (*pb.Empty, error) {
+	query := r.db.Builder.Insert("resource_subsription_categories").
+		Columns("id, subscription_category_id, resource_category_id")
+
+	for _, e := range req.ResourceCategoryId {
+		query = query.Values(uuid.New().String(), req.SubscriptionCategoryId, e)
+	}
+
+	_, err := query.RunWith(r.db.Db).Exec()
+
+	return &pb.Empty{}, HandleDatabaseError(err, r.log, "add resource category to subscription category")
+}
+
+func (r *subscriptionCategory) RemoveResourceCategory(ctx context.Context, req *pb.SubscriptionResourceCategoryIds) (*pb.Empty, error) {
+	query := r.db.Builder.Delete("resource_subsription_categories").
+		Where(squirrel.Eq{"subscription_category_id": req.SubscriptionCategoryId}).Where(squirrel.Eq{"resource_category_id": req.ResourceCategoryId})
+
+	_, err := query.RunWith(r.db.Db).Exec()
+
+	return &pb.Empty{}, HandleDatabaseError(err, r.log, "remove resource category from subscription category")
 }

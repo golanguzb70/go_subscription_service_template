@@ -3,6 +3,8 @@ syntax="proto3";
 package subscription_service;
 option go_package ="genproto/subscription_service";
 
+import "resource_category.proto";
+
 message SubscriptionCategory {
     string id = 1;
     string title_uz = 2;
@@ -16,11 +18,18 @@ message SubscriptionCategory {
     string image_en = 10;
     bool   active = 11;
     bool   visible = 12;
-    string created_at = 13;
-    string updated_at = 14;
+    repeated ResourceCategory resource_categories = 13;
+    string created_at = 14;
+    string updated_at = 15;
 }
 
 message SubscriptionCategories {
     int32 count = 1;
     repeated SubscriptionCategory items = 2;
+}
+
+message SubscriptionResourceCategoryIds {
+    string id = 1;
+    string subscription_category_id = 2;
+    repeated string resource_category_id = 3;
 }
