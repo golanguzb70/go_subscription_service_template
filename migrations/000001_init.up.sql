@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 
 CREATE TABLE IF NOT EXISTS user_subscriptions (
   id uuid PRIMARY KEY,
-  user_key uuid,
+  user_key varchar(40) NOT NULL,
   subscription_id uuid NOT NULL REFERENCES subscriptions(id),
   start_time timestamp NOT NULL DEFAULT 'now()',
   end_time timestamp NOT NULL,
@@ -81,3 +81,18 @@ CREATE TABLE IF NOT EXISTS user_subscriptions (
   updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
   deleted_at TIMESTAMP WITHOUT TIME ZONE
 );
+
+CREATE INDEX idx_user_key ON user_subscriptions (user_key);
+
+CREATE TABLE tvodacces (
+  id uuid PRIMARY KEY,
+  user_key uuid NOT NULL,
+  resource_key varchar NOT NULL,
+  price int NOT NULL CHECK(price >= 0),
+  start_time timestamp NOT NULL DEFAULT 'now()',
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  deleted_at TIMESTAMP WITHOUT TIME ZONE,
+  CONSTRAINT unique_user_resource_key UNIQUE (user_key, resource_key)
+);
+

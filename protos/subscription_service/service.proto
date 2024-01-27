@@ -48,5 +48,7 @@ service SubscriptionService {
 
 service UserSubscriptionService {
     rpc Buy(BuyRequest) returns (Empty) {};
+    rpc CreateTvodAccess(TvodAccess) returns (TvodAccess) {};
+    rpc RemoveTvodAccess(Id) returns (Empty) {}; 
     rpc CheckSubscription(CheckSubscriptionRequest) returns (CheckSubscriptionResponse) {};
 }

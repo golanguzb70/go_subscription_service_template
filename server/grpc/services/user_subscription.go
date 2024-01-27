@@ -67,3 +67,49 @@ func (s *UserSubscriptionService) Buy(ctx context.Context, req *pb.BuyRequest) (
 
 	return &pb.Empty{}, err
 }
+
+/*
+	Logic of creating tvod access
+
+0. Check if there is access or not
+1. Get Actual price of resource using resource type
+2. Withdraw the amount from user's pocket_id
+3. Create the access
+*/
+func (s *UserSubscriptionService) CreateTvodAccess(ctx context.Context, req *pb.TvodAccess) (*pb.TvodAccess, error) {
+	// 0. Check if there is access or not
+	access, err := s.storage.UserSubscription().CheckSubscription(ctx, &pb.CheckSubscriptionRequest{
+		UserKey:     req.UserId,
+		ResourceKey: req.ResourceKey,
+		Type:        "tvod",
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if access.HasAccess {
+		return nil, status.Error(codes.AlreadyExists, "this access is already exists")
+	}
+	//	1. Get Actual price of resource using resource type
+
+	// 2. Withdraw the amount from user's pocket_id
+
+	// 3. Create the access
+	return s.storage.UserSubscription().CreateTvodAccess(ctx, req)
+}
+
+func (s *UserSubscriptionService) RemoveTvodAccess(ctx context.Context, req *pb.Id) (*pb.Empty, error) {
+	return s.storage.UserSubscription().RemoveTvodAccess(ctx, req)
+}
+
+/*
+Logic of checking user subscription access.
+ 1. tvod
+    a) Just check if access to that tvod exists to specific user
+ 2. svod
+    a) If existing subscription category's allow_all_resources is true check for only category
+    b) Otherwise check for resource access.
+*/
+func (s *UserSubscriptionService) CheckSubscription(ctx context.Context, req *pb.CheckSubscriptionRequest) (*pb.CheckSubscriptionResponse, error) {
+	return s.storage.UserSubscription().CheckSubscription(ctx, req)
+}

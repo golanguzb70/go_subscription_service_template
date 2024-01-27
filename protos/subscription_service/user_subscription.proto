@@ -14,8 +14,21 @@ message CheckSubscriptionRequest {
     string user_key = 1;
     string resource_category_key = 2;
     string resource_key = 3;
+    string type = 4;
 }
 
 message  CheckSubscriptionResponse {
     bool has_access = 1;
+}
+
+message TvodAccess {
+    string id = 1;
+    string user_id = 2;
+    string resource_key = 3;
+    int32 price = 4;
+    string start_time = 5;
+    string created_at = 6;
+    string updated_at = 7;
+    string access_type = 8; // this field is used to get the actual price of resource
+    string user_pocket_id = 9;
 }

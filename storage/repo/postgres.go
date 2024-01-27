@@ -45,5 +45,7 @@ type SubscriptionI interface {
 
 type UserSubscriptionI interface {
 	Buy(ctx context.Context, req *models.CreateUserSubscriptionReq) (*pb.Empty, error)
+	CreateTvodAccess(ctx context.Context, req *pb.TvodAccess) (*pb.TvodAccess, error)
+	RemoveTvodAccess(ctx context.Context, req *pb.Id) (*pb.Empty, error)
 	CheckSubscription(ctx context.Context, req *pb.CheckSubscriptionRequest) (*pb.CheckSubscriptionResponse, error)
 }

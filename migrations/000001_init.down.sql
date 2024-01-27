@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS tvodacces;
 DROP TABLE IF EXISTS user_subscriptions;
 DROP TABLE IF EXISTS subscriptions;
 DROP TABLE IF EXISTS resource_subsription_categories;

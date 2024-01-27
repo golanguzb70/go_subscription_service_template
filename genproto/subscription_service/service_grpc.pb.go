@@ -1122,6 +1122,8 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 
 const (
 	UserSubscriptionService_Buy_FullMethodName               = "/subscription_service.UserSubscriptionService/Buy"
+	UserSubscriptionService_CreateTvodAccess_FullMethodName  = "/subscription_service.UserSubscriptionService/CreateTvodAccess"
+	UserSubscriptionService_RemoveTvodAccess_FullMethodName  = "/subscription_service.UserSubscriptionService/RemoveTvodAccess"
 	UserSubscriptionService_CheckSubscription_FullMethodName = "/subscription_service.UserSubscriptionService/CheckSubscription"
 )
 
@@ -1130,6 +1132,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserSubscriptionServiceClient interface {
 	Buy(ctx context.Context, in *BuyRequest, opts ...grpc.CallOption) (*Empty, error)
+	CreateTvodAccess(ctx context.Context, in *TvodAccess, opts ...grpc.CallOption) (*TvodAccess, error)
+	RemoveTvodAccess(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Empty, error)
 	CheckSubscription(ctx context.Context, in *CheckSubscriptionRequest, opts ...grpc.CallOption) (*CheckSubscriptionResponse, error)
 }
 
@@ -1150,6 +1154,24 @@ func (c *userSubscriptionServiceClient) Buy(ctx context.Context, in *BuyRequest,
 	return out, nil
 }
 
+func (c *userSubscriptionServiceClient) CreateTvodAccess(ctx context.Context, in *TvodAccess, opts ...grpc.CallOption) (*TvodAccess, error) {
+	out := new(TvodAccess)
+	err := c.cc.Invoke(ctx, UserSubscriptionService_CreateTvodAccess_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userSubscriptionServiceClient) RemoveTvodAccess(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, UserSubscriptionService_RemoveTvodAccess_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userSubscriptionServiceClient) CheckSubscription(ctx context.Context, in *CheckSubscriptionRequest, opts ...grpc.CallOption) (*CheckSubscriptionResponse, error) {
 	out := new(CheckSubscriptionResponse)
 	err := c.cc.Invoke(ctx, UserSubscriptionService_CheckSubscription_FullMethodName, in, out, opts...)
@@ -1164,6 +1186,8 @@ func (c *userSubscriptionServiceClient) CheckSubscription(ctx context.Context, i
 // for forward compatibility
 type UserSubscriptionServiceServer interface {
 	Buy(context.Context, *BuyRequest) (*Empty, error)
+	CreateTvodAccess(context.Context, *TvodAccess) (*TvodAccess, error)
+	RemoveTvodAccess(context.Context, *Id) (*Empty, error)
 	CheckSubscription(context.Context, *CheckSubscriptionRequest) (*CheckSubscriptionResponse, error)
 	mustEmbedUnimplementedUserSubscriptionServiceServer()
 }
@@ -1174,6 +1198,12 @@ type UnimplementedUserSubscriptionServiceServer struct {
 
 func (UnimplementedUserSubscriptionServiceServer) Buy(context.Context, *BuyRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Buy not implemented")
+}
+func (UnimplementedUserSubscriptionServiceServer) CreateTvodAccess(context.Context, *TvodAccess) (*TvodAccess, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTvodAccess not implemented")
+}
+func (UnimplementedUserSubscriptionServiceServer) RemoveTvodAccess(context.Context, *Id) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveTvodAccess not implemented")
 }
 func (UnimplementedUserSubscriptionServiceServer) CheckSubscription(context.Context, *CheckSubscriptionRequest) (*CheckSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckSubscription not implemented")
@@ -1210,6 +1240,42 @@ func _UserSubscriptionService_Buy_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserSubscriptionService_CreateTvodAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TvodAccess)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserSubscriptionServiceServer).CreateTvodAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserSubscriptionService_CreateTvodAccess_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserSubscriptionServiceServer).CreateTvodAccess(ctx, req.(*TvodAccess))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserSubscriptionService_RemoveTvodAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Id)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserSubscriptionServiceServer).RemoveTvodAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserSubscriptionService_RemoveTvodAccess_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserSubscriptionServiceServer).RemoveTvodAccess(ctx, req.(*Id))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserSubscriptionService_CheckSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CheckSubscriptionRequest)
 	if err := dec(in); err != nil {
@@ -1238,6 +1304,14 @@ var UserSubscriptionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Buy",
 			Handler:    _UserSubscriptionService_Buy_Handler,
+		},
+		{
+			MethodName: "CreateTvodAccess",
+			Handler:    _UserSubscriptionService_CreateTvodAccess_Handler,
+		},
+		{
+			MethodName: "RemoveTvodAccess",
+			Handler:    _UserSubscriptionService_RemoveTvodAccess_Handler,
 		},
 		{
 			MethodName: "CheckSubscription",
