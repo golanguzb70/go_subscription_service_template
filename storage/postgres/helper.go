@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/Masterminds/squirrel"
 	pb "github.com/golanguzb70/go_subscription_service/genproto/subscription_service"
@@ -77,4 +78,9 @@ func PrepareOrder(orders []*pb.SortBy) string {
 	}
 
 	return strings.Join(res, ", ")
+}
+
+func ParseTimeString(input string) (time.Time, error) {
+	layout := "2006-01-02 15:04"
+	return time.Parse(layout, input)
 }

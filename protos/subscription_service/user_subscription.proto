@@ -3,6 +3,7 @@ syntax="proto3";
 package subscription_service;
 option go_package ="genproto/subscription_service";
 
+import "subscription_categories.proto";
 
 message BuyRequest {
     string user_id = 1;
@@ -31,4 +32,29 @@ message TvodAccess {
     string updated_at = 7;
     string access_type = 8; // this field is used to get the actual price of resource
     string user_pocket_id = 9;
+}
+
+message GetUserSubscriptionsRequest {
+    int32 active = 1;
+    string user_key = 2;
+    string from_date = 3;
+    string to_date = 4;
+    int32 visible = 5;
+    int32 page = 6;
+    int32 limit = 7;
+}
+
+message GetUserSubscriptionsResponse {
+    int32 count = 1;
+    repeated UserSubscription items = 2;
+}
+
+message UserSubscription {
+    string id = 1;
+    SubscriptionCategory category = 2;
+    string start_date = 3;
+    string end_date = 4;
+    bool active = 5;
+    string user_key = 6;
+    string created_at = 7;
 }

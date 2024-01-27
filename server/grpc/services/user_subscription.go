@@ -113,3 +113,7 @@ Logic of checking user subscription access.
 func (s *UserSubscriptionService) CheckSubscription(ctx context.Context, req *pb.CheckSubscriptionRequest) (*pb.CheckSubscriptionResponse, error) {
 	return s.storage.UserSubscription().CheckSubscription(ctx, req)
 }
+
+func (s *UserSubscriptionService) GetUserSubscriptions(ctx context.Context, req *pb.GetUserSubscriptionsRequest) (*pb.GetUserSubscriptionsResponse, error) {
+	return s.storage.UserSubscription().GetUserSubscriptions(ctx, req)
+}

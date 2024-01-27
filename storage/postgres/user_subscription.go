@@ -90,3 +90,78 @@ func (r *userSubscription) CheckSubscription(ctx context.Context, req *pb.CheckS
 
 	return response, nil
 }
+
+func (r *userSubscription) GetUserSubscriptions(ctx context.Context, req *pb.GetUserSubscriptionsRequest) (*pb.GetUserSubscriptionsResponse, error) {
+	var (
+		res            = &pb.GetUserSubscriptionsResponse{}
+		whereCondition = squirrel.And{}
+	)
+	if req.Page < 1 {
+		req.Page = 1
+	}
+	if req.Limit < 0 {
+		req.Limit = 10
+	}
+
+	if req.Active != 0 {
+		whereCondition = append(whereCondition, squirrel.Eq{"us.active": req.Active > 0})
+	}
+
+	if req.Active != 0 {
+		whereCondition = append(whereCondition, squirrel.Eq{"sc.visible": req.Visible > 0})
+	}
+
+	if req.UserKey != "" {
+		whereCondition = append(whereCondition, squirrel.Eq{"us.user_key": req.UserKey})
+	}
+
+	if req.FromDate != "" {
+		t, err := ParseTimeString(req.FromDate)
+		if err != nil {
+			whereCondition = append(whereCondition, squirrel.Eq{"us.start_time": t})
+		}
+	}
+
+	if req.ToDate != "" {
+		t, err := ParseTimeString(req.ToDate)
+		if err != nil {
+			whereCondition = append(whereCondition, squirrel.Eq{"us.end_time": t})
+		}
+	}
+
+	query := r.db.Builder.Select(`
+		us.id, us.user_key, us.start_time, us.end_time, us.active,
+		sc.id, sc.title_uz, sc.title_ru, sc.title_en, 
+		sc.description_uz, sc.description_ru, sc.description_en,
+		sc.image_uz, sc.image_ru, sc.image_en
+	`).From("user_subscriptions us").
+		Join("subscriptions s ON s.id=us.subscription_id").
+		Join("subscription_categories sc ON sc.id=s.category_id").
+		Where(whereCondition).OrderBy("us.start_time DESC").
+		Offset(uint64((req.Page - 1) * req.Limit)).Limit(uint64(req.Limit))
+
+	rows, err := query.RunWith(r.db.Db).Query()
+	if err != nil {
+		return res, HandleDatabaseError(err, r.log, "getting user subscriptions")
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		temp := &pb.UserSubscription{
+			Category: &pb.SubscriptionCategory{},
+		}
+
+		err := rows.Scan(
+			&temp.Id, &temp.UserKey, &temp.StartDate, &temp.EndDate, &temp.Active,
+			&temp.Category.Id, &temp.Category.TitleUz, &temp.Category.TitleRu, &temp.Category.TitleEn,
+			&temp.Category.DescriptionUz, &temp.Category.DescriptionRu, &temp.Category.DescriptionEn,
+			&temp.Category.ImageUz, &temp.Category.ImageRu, &temp.Category.ImageEn,
+		)
+		if err != nil {
+			return res, HandleDatabaseError(err, r.log, "scan user subscriptions")
+		}
+		res.Items = append(res.Items, temp)
+	}
+
+	return res, nil
+}

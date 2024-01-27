@@ -1121,10 +1121,11 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	UserSubscriptionService_Buy_FullMethodName               = "/subscription_service.UserSubscriptionService/Buy"
-	UserSubscriptionService_CreateTvodAccess_FullMethodName  = "/subscription_service.UserSubscriptionService/CreateTvodAccess"
-	UserSubscriptionService_RemoveTvodAccess_FullMethodName  = "/subscription_service.UserSubscriptionService/RemoveTvodAccess"
-	UserSubscriptionService_CheckSubscription_FullMethodName = "/subscription_service.UserSubscriptionService/CheckSubscription"
+	UserSubscriptionService_Buy_FullMethodName                  = "/subscription_service.UserSubscriptionService/Buy"
+	UserSubscriptionService_CreateTvodAccess_FullMethodName     = "/subscription_service.UserSubscriptionService/CreateTvodAccess"
+	UserSubscriptionService_RemoveTvodAccess_FullMethodName     = "/subscription_service.UserSubscriptionService/RemoveTvodAccess"
+	UserSubscriptionService_CheckSubscription_FullMethodName    = "/subscription_service.UserSubscriptionService/CheckSubscription"
+	UserSubscriptionService_GetUserSubscriptions_FullMethodName = "/subscription_service.UserSubscriptionService/GetUserSubscriptions"
 )
 
 // UserSubscriptionServiceClient is the client API for UserSubscriptionService service.
@@ -1135,6 +1136,7 @@ type UserSubscriptionServiceClient interface {
 	CreateTvodAccess(ctx context.Context, in *TvodAccess, opts ...grpc.CallOption) (*TvodAccess, error)
 	RemoveTvodAccess(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Empty, error)
 	CheckSubscription(ctx context.Context, in *CheckSubscriptionRequest, opts ...grpc.CallOption) (*CheckSubscriptionResponse, error)
+	GetUserSubscriptions(ctx context.Context, in *GetUserSubscriptionsRequest, opts ...grpc.CallOption) (*GetUserSubscriptionsResponse, error)
 }
 
 type userSubscriptionServiceClient struct {
@@ -1181,6 +1183,15 @@ func (c *userSubscriptionServiceClient) CheckSubscription(ctx context.Context, i
 	return out, nil
 }
 
+func (c *userSubscriptionServiceClient) GetUserSubscriptions(ctx context.Context, in *GetUserSubscriptionsRequest, opts ...grpc.CallOption) (*GetUserSubscriptionsResponse, error) {
+	out := new(GetUserSubscriptionsResponse)
+	err := c.cc.Invoke(ctx, UserSubscriptionService_GetUserSubscriptions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserSubscriptionServiceServer is the server API for UserSubscriptionService service.
 // All implementations must embed UnimplementedUserSubscriptionServiceServer
 // for forward compatibility
@@ -1189,6 +1200,7 @@ type UserSubscriptionServiceServer interface {
 	CreateTvodAccess(context.Context, *TvodAccess) (*TvodAccess, error)
 	RemoveTvodAccess(context.Context, *Id) (*Empty, error)
 	CheckSubscription(context.Context, *CheckSubscriptionRequest) (*CheckSubscriptionResponse, error)
+	GetUserSubscriptions(context.Context, *GetUserSubscriptionsRequest) (*GetUserSubscriptionsResponse, error)
 	mustEmbedUnimplementedUserSubscriptionServiceServer()
 }
 
@@ -1207,6 +1219,9 @@ func (UnimplementedUserSubscriptionServiceServer) RemoveTvodAccess(context.Conte
 }
 func (UnimplementedUserSubscriptionServiceServer) CheckSubscription(context.Context, *CheckSubscriptionRequest) (*CheckSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckSubscription not implemented")
+}
+func (UnimplementedUserSubscriptionServiceServer) GetUserSubscriptions(context.Context, *GetUserSubscriptionsRequest) (*GetUserSubscriptionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserSubscriptions not implemented")
 }
 func (UnimplementedUserSubscriptionServiceServer) mustEmbedUnimplementedUserSubscriptionServiceServer() {
 }
@@ -1294,6 +1309,24 @@ func _UserSubscriptionService_CheckSubscription_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserSubscriptionService_GetUserSubscriptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserSubscriptionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserSubscriptionServiceServer).GetUserSubscriptions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserSubscriptionService_GetUserSubscriptions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserSubscriptionServiceServer).GetUserSubscriptions(ctx, req.(*GetUserSubscriptionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserSubscriptionService_ServiceDesc is the grpc.ServiceDesc for UserSubscriptionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1316,6 +1349,10 @@ var UserSubscriptionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckSubscription",
 			Handler:    _UserSubscriptionService_CheckSubscription_Handler,
+		},
+		{
+			MethodName: "GetUserSubscriptions",
+			Handler:    _UserSubscriptionService_GetUserSubscriptions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

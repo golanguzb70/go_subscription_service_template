@@ -48,4 +48,5 @@ type UserSubscriptionI interface {
 	CreateTvodAccess(ctx context.Context, req *pb.TvodAccess) (*pb.TvodAccess, error)
 	RemoveTvodAccess(ctx context.Context, req *pb.Id) (*pb.Empty, error)
 	CheckSubscription(ctx context.Context, req *pb.CheckSubscriptionRequest) (*pb.CheckSubscriptionResponse, error)
+	GetUserSubscriptions(ctx context.Context, req *pb.GetUserSubscriptionsRequest) (*pb.GetUserSubscriptionsResponse, error)
 }

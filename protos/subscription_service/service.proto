@@ -51,4 +51,5 @@ service UserSubscriptionService {
     rpc CreateTvodAccess(TvodAccess) returns (TvodAccess) {};
     rpc RemoveTvodAccess(Id) returns (Empty) {}; 
     rpc CheckSubscription(CheckSubscriptionRequest) returns (CheckSubscriptionResponse) {};
+    rpc GetUserSubscriptions(GetUserSubscriptionsRequest) returns (GetUserSubscriptionsResponse) {};
 }
